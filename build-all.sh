@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Make sure we have SDL2 and SDL2_mixer. Download/unzip if we don't have them
 cd ext/SDL2
