@@ -12,31 +12,34 @@ if [ ! -d build/Debug ]; then
     mkdir build/Debug
 fi
 
+SDLVersion=2.26.2
+SDLMixerVersion=2.6.2
+
 # Make sure we have SDL2 and SDL2_mixer. Download/untar if we don't have them
 if [ ! -d ext/SDL2 ]; then
     mkdir ext/SDL2
 fi
 cd ext/SDL2
-if [ ! -d SDL2-2.0.20 ]; then
-    if [ ! -f SDL2-devel-2.0.20-VC.zip ]; then
-        curl -O -X GET https://www.libsdl.org/release/SDL2-devel-2.0.20-mingw.tar.gz
+if [ ! -d SDL2-${SDLVersion} ]; then
+    if [ ! -f SDL2-devel-${SDLVersion}-VC.zip ]; then
+        curl -O -X GET https://www.libsdl.org/release/SDL2-devel-${SDLVersion}-mingw.tar.gz
     fi
-    tar -xf SDL2-devel-2.0.20-mingw.tar.gz
+    tar -xf SDL2-devel-${SDLVersion}-mingw.tar.gz
 fi
-if [ ! -d SDL2_mixer-2.0.4 ]; then
-    if [ ! -f SDL2_mixer-devel-2.0.4-VC.zip ]; then
-        curl -O -X GET https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-2.0.4-mingw.tar.gz
+if [ ! -d SDL2_mixer-${SDLMixerVersion} ]; then
+    if [ ! -f SDL2_mixer-devel-${SDLMixerVersion}-VC.zip ]; then
+        curl -O -X GET https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-${SDLMixerVersion}-mingw.tar.gz
     fi
-    tar -xf SDL2_mixer-devel-2.0.4-mingw.tar.gz
+    tar -xf SDL2_mixer-devel-${SDLMixerVersion}-mingw.tar.gz
 fi
 cd -
 
 # Copy SDL2 and SDL2_mixer to the output dir
 if [ ! -e build/SDL2.dll ]; then
-    cp ext/SDL2/SDL2-2.0.20/x86_64-w64-mingw32/bin/SDL2.dll build/Debug
+    cp ext/SDL2/SDL2-${SDLVersion}/x86_64-w64-mingw32/bin/SDL2.dll build/Debug
 fi
-if [ ! -e build/SDL2_mixe.dll ]; then
-    cp ext/SDL2/SDL2_mixer-2.0.4/x86_64-w64-mingw32/bin/SDL2_mixer.dll build/Debug
+if [ ! -e build/SDL2_mixer.dll ]; then
+    cp ext/SDL2/SDL2_mixer-${SDLMixerVersion}/x86_64-w64-mingw32/bin/SDL2_mixer.dll build/Debug
 fi
 
 echo "running CMake"
